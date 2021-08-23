@@ -23,7 +23,7 @@ class RiversToRaster:
             for points in shapefile_reader.get_points():
                 points_transformed = []
                 for point in points:
-                    points_transformed.append(tiff.loc_to_px(*point))
+                    points_transformed.append(tiff.loc_to_px(point))
                 if 0 in np.max(points,axis=0):
                     continue
                 self.dico_lines_per_tiff[tiff.current_path].append(points_transformed)

@@ -6,6 +6,7 @@ from numpy.lib.stride_tricks import sliding_window_view
 
 # @jit(nopython=True)
 def window(arr, shape=(3, 3)):
+
     # Find row and column window sizes
     r_win = int(np.floor(shape[0] / 2))
     c_win = int(np.floor(shape[1] / 2))

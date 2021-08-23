@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import get_type_hints, Union, Optional
 
 import numpy as np
-import re
+import re, os
 
 from osgeo import gdal,osr
 
@@ -90,7 +90,8 @@ class BDAltivFolderConverter:
         self.out_folder_manager = out_folder_manager
     def convert(self):
         [folder] = list(self.base_path.joinpath("BDALTIV2").glob("1_*"))
-        for asc_file in list(folder.iterdir())[0].iterdir():
+        [folder] = [f for f in folder.iterdir() if os.path.isdir(f)]
+        for asc_file in folder.iterdir():
             file =  ASCFile(asc_file)
             file.to_geotiff(self.out_folder_manager.next_name())
 

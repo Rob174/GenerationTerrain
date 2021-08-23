@@ -7,6 +7,11 @@ from main.explore.input_data_processors.BoundingBox.BoundingBox import BoundingB
 from main.explore.input_data_processors.ColorManager.Color import Color
 import numpy as np
 
+from main.FolderInfos import FolderInfos
+from main.src.input_data.GeotiffOpener import GeotiffOpener
+from main.src.input_data.ShapefileReaders.RiversShpFileReader import RiversShpFileReader
+
+
 class LineDrawer:
     def __init__(self, transformer: CoordinateTransformer, thickness: int, color: Color):
         self.thickness = thickness
@@ -24,4 +29,8 @@ class LineDrawer:
         draw = ImageDraw.ImageDraw(img)
         draw.line(points, fill=self.color.to_hex(), width=self.thickness)
         return img
-        
+if __name__ == '__main__':
+    FolderInfos.init(test_without_data=True)
+
+
+

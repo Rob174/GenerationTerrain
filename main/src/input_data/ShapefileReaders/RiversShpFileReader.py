@@ -8,4 +8,10 @@ class RiversShpFileReader:
     def get_points(self):
         shapefile = gpd.read_file(self.source_file)
         for shape in shapefile.geometry:
-            yield list(zip(*shape.xy))
+            if shape.type == "LineString":
+                yield list(zip(*shape.xy))
+            elif shape.type == 'MultiLineString':
+                accumulator =  []
+                for subline in shape:
+                    accumulator.extend(list(zip(*subline.xy)))
+                yield accumulator

@@ -27,16 +27,17 @@ class RiversToRaster:
         progress = ProgressBar0(IterationManager(total=size))
         with progress:
             for tiff in geotiff_opener.iter_geotiff(start=start,stop=stop):
-                dico_lines_per_tiff[tiff.current_path] = []
+
+                dico_lines_per_tiff[tiff.current_path.name] = []
                 for points in list_points:
                     points_transformed = []
                     for point in points:
                         points_transformed.append(tiff.loc_to_px(point))
                     if 0 in np.max(points,axis=0):
                         continue
-                    dico_lines_per_tiff[tiff.current_path].append(points_transformed)
+                    dico_lines_per_tiff[tiff.current_path.name].append(points_transformed)
                     progress.on_end()
-        with open(FolderInfos.data_raw.joinpath("rivers").joinpath(f"from_{start}_to_{stop}.json")) as fp:
+        with open(FolderInfos.data_raw.joinpath("rivers").joinpath(f"from_{start}_to_{stop}.json"),"w") as fp:
             json.dump(dico_lines_per_tiff,fp)
         return None
     def len_geotiff(self):

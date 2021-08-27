@@ -1,4 +1,4 @@
-from typing import List, Tuple, Optional
+from typing import List, Tuple, Optional, Iterable
 
 from PIL import Image, ImageDraw
 
@@ -18,13 +18,12 @@ class LineDrawer:
         self.transformer = transformer
         self.color = color
 
-    def draw(self, points: List[Tuple[int, int]], bounding_box: BoundingBox, layer: Optional[Image.Image],draw: Optional[ImageDraw.ImageDraw]):
+    def draw(self, points_x: Iterable[float],points_y:Iterable[float], bounding_box: BoundingBox, layer: Optional[Image.Image],draw: Optional[ImageDraw.ImageDraw]):
         if layer is None:
             layer = np.zeros((*bounding_box.shape, 3), dtype=np.uint8)
             layer = Image.fromarray(layer)
             draw = ImageDraw.ImageDraw(layer)
-        for i in range(len(points)):
-            points[i] = self.transformer.to_px(*points[i])
+        points = self.transformer.to_px(points_x,points_y)
         draw.line(points, fill=self.color.to_hex(), width=self.thickness)
         return layer,draw
 if __name__ == '__main__':

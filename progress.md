@@ -7,6 +7,13 @@
 - ✔ Rivers read and extract points 
 - ✔ Raster read
 
+# Friday Aug 27 2021
+[7d34609](https://github.com/Rob174/GenerationTerrain/tree/7d34609e13da65472cc71ca23e869592035adfbb)
+
+Cache rivers : convert to images
+
+- ✔ First version
+- ✔ Optimized version avoiding PIL np switch
 
 ✔️ done and tested ; 🔨 done not tested ; ⏲️ in progress ; ⏳ waiting for other scripts to finish ; 🚩 problem ; 🐛 bug ; 〰️ ok does the job but maybe to improve ; 🛑 pause ; 🛰️ release
 

@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, Optional
 
 from main.FolderInfos import FolderInfos
 import rasterio as rio
@@ -22,3 +22,7 @@ class GeotiffOpener:
         return len(list(self.base_path.iterdir()))
     def loc_to_px(self, point: Tuple[float, float]):
         return self.current_rio_object.index(*point)
+    def upper_left(self):
+        return self.current_rio_object.transform * (0,0)
+    def lower_right(self):
+        return self.current_rio_object.transform * self.current_rio_object.shape

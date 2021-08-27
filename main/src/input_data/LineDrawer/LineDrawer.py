@@ -2,9 +2,9 @@ from typing import List, Tuple, Optional
 
 from PIL import Image, ImageDraw
 
-from main.explore.input_data_processors import CoordinateTransformer
-from main.explore.input_data_processors.BoundingBox.BoundingBox import BoundingBox
-from main.explore.input_data_processors.ColorManager.Color import Color
+from main.src.input_data.CoordinateTransformer.RasterCoordinateTransformer import RasterCoordinateTransformer
+from main.src.input_data.BoundingBox.BoundingBox import BoundingBox
+from main.src.input_data.ColorManager.Color import Color
 import numpy as np
 
 from main.FolderInfos import FolderInfos
@@ -13,7 +13,7 @@ from main.src.input_data.ShapefileReaders.RiversShpFileReader import RiversShpFi
 
 
 class LineDrawer:
-    def __init__(self, transformer: CoordinateTransformer, thickness: int, color: Color):
+    def __init__(self, transformer: RasterCoordinateTransformer, thickness: int, color: Color):
         self.thickness = thickness
         self.transformer = transformer
         self.color = color
@@ -28,7 +28,7 @@ class LineDrawer:
         img = Image.fromarray(layer)
         draw = ImageDraw.ImageDraw(img)
         draw.line(points, fill=self.color.to_hex(), width=self.thickness)
-        return img
+        return np.array(img,dtype=np.uint8)
 if __name__ == '__main__':
     FolderInfos.init(test_without_data=True)
 

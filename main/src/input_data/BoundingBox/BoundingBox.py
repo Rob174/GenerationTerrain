@@ -1,6 +1,6 @@
 from typing import Tuple
 
-from main.explore.input_data_processors.CoordinateTransformer.RasterCoordinateTransformer import RasterCoordinateTransformer
+from main.src.input_data.CoordinateTransformer.RasterCoordinateTransformer import RasterCoordinateTransformer
 import numpy as np
 
 class BoundingBox:

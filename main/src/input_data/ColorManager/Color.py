@@ -5,7 +5,4 @@ class Color:
         self.b = b
 
     def to_hex(self):
-        s = ""
-        for c in (self.r, self.g, self.b):
-            s += str(hex(c))[2:]
-        return s
+        return f"#{self.r:02x}{self.g:02x}{self.b:02x}"

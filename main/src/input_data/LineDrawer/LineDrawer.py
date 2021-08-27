@@ -19,8 +19,6 @@ class LineDrawer:
         self.color = color
 
     def draw(self, points: List[Tuple[int, int]], bounding_box: BoundingBox, layer: Optional[Image.Image],draw: Optional[ImageDraw.ImageDraw]):
-        assert layer is None or (
-                    type(layer) is np.ndarray and len(layer.shape) == 3 and layer.shape[-1] == 3), "Wrong type of layer"
         if layer is None:
             layer = np.zeros((*bounding_box.shape, 3), dtype=np.uint8)
             layer = Image.fromarray(layer)

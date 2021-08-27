@@ -48,7 +48,7 @@ class RiversToRaster:
                         if 0 in np.max(points,axis=0):
                             continue
                         progress.on_end()
-                        layer = self.line_drawer.draw(
+                        layer,draw = self.line_drawer.draw(
                             points,
                             bounding_box=BoundingBox(
                                 upper_left=tiff.upper_left(),

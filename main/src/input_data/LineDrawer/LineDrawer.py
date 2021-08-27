@@ -18,17 +18,17 @@ class LineDrawer:
         self.transformer = transformer
         self.color = color
 
-    def draw(self, points: List[Tuple[int, int]], bounding_box: BoundingBox, layer: Optional[np.ndarray]):
+    def draw(self, points: List[Tuple[int, int]], bounding_box: BoundingBox, layer: Optional[Image],draw: Optional[ImageDraw.ImageDraw]):
         assert layer is None or (
                     type(layer) is np.ndarray and len(layer.shape) == 3 and layer.shape[-1] == 3), "Wrong type of layer"
         if layer is None:
             layer = np.zeros((*bounding_box.shape, 3), dtype=np.uint8)
+            layer = Image.fromarray(layer)
+            draw = ImageDraw.ImageDraw(layer)
         for i in range(len(points)):
             points[i] = self.transformer.to_px(*points[i])
-        img = Image.fromarray(layer)
-        draw = ImageDraw.ImageDraw(img)
         draw.line(points, fill=self.color.to_hex(), width=self.thickness)
-        return np.array(img,dtype=np.uint8)
+        return layer,draw
 if __name__ == '__main__':
     FolderInfos.init(test_without_data=True)
 

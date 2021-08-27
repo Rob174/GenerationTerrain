@@ -1,3 +1,4 @@
+import PIL
 import numpy as np
 import json
 from pathlib import Path
@@ -38,7 +39,8 @@ class RiversToRaster:
             with File(path_hdf5,"w") as cache:
                 for tiff in self.geotiff_opener.iter_geotiff(start=start,stop=stop):
                     self.line_drawer.transformer.set_source(tiff.current_rio_object)
-                    layer = None
+                    layer: Optional[PIL.Image] = None
+                    draw: Optional[PIL.ImageDraw.ImageDraw] = None
                     for points in list_points:
                         points_transformed = []
                         for point in points:
@@ -53,8 +55,9 @@ class RiversToRaster:
                                 lower_right=tiff.lower_right(),
                                 coordinate_transformer=self.line_drawer.transformer
                             ),
-                            layer=layer
+                            layer=layer,draw=draw
                         )
+                layer = np.array(layer,dtype=np.uint8)
                 cache.create_dataset(name=tiff.current_path.stem,shape=layer.shape,dtype='f',data=layer)
         return None
     def len_geotiff(self):

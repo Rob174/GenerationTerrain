@@ -16,6 +16,9 @@ class RasterCoordinateTransformer:
     def to_px(self, point_x: Union[Iterable,float], point_y: Union[Iterable,float]):
         if self.source_raster is None:
             raise NoneException("source_raster")
-        points_x,points_y = self.source_raster.index(point_x, point_y)
-        return [(x,y) for x,y in zip(points_x,points_y)]
+        points = self.source_raster.index(point_x, point_y)
+        if not isinstance(points[0],int) and not  isinstance(points[0],float) and \
+            not isinstance(points[1],int) and not  isinstance(points[1],float):
+            points = [(x,y) for x,y in zip(points[0],points[1])]
+        return points
         

@@ -15,6 +15,7 @@ Cache rivers : convert to images
 
 - ✔ First version
 - ✔ Optimized version avoiding PIL np switch
+- ✔ Optimized version avoiding too many invtransform get
 
 ✔️ done and tested ; 🔨 done not tested ; ⏲️ in progress ; ⏳ waiting for other scripts to finish ; 🚩 problem ; 🐛 bug ; 〰️ ok does the job but maybe to improve ; 🛑 pause ; 🛰️ release
 

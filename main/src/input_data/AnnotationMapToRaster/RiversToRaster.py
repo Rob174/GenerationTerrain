@@ -42,14 +42,9 @@ class RiversToRaster:
                     layer: Optional[PIL.Image] = None
                     draw: Optional[PIL.ImageDraw.ImageDraw] = None
                     for points in list_points:
-                        points_transformed = []
-                        for point in points:
-                            points_transformed.append(tiff.loc_to_px(point))
-                        if 0 in np.max(points,axis=0):
-                            continue
                         progress.on_end()
                         layer,draw = self.line_drawer.draw(
-                            points,
+                            [point[0] for point in points],[point[1] for point in points],
                             bounding_box=BoundingBox(
                                 upper_left=tiff.upper_left(),
                                 lower_right=tiff.lower_right(),

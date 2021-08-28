@@ -2,6 +2,8 @@ from abc import ABC,abstractmethod
 from enum import Enum
 from typing import List
 
+# import main.src.dataset.PreprocessingOperations.AbstractOperation as AbstractOperation
+
 
 class EnumStatus(str,Enum):
     VISITED = "visited"
@@ -10,14 +12,15 @@ class EnumStatus(str,Enum):
 class AbstractNode(ABC):
     id = 0
     def __init__(self,*inputs):
-        self.attr_inputs: List[AbstractNode] = inputs
-        AbstractNode.id += 1
-        self.attr_id =  AbstractNode.id
+        self.attr_inputs: List = inputs
+        self.attr_id =  int(AbstractNode.id)
+        self.leaf = False
+        AbstractNode.id = AbstractNode.id+1
         self.children = []
         for input in self.attr_inputs:
             input.children.append(self)
         for input in self.attr_inputs:
-            input.children.sort(key=lambda x:x.id)
+            input.children.sort(key=lambda x:x.attr_id)
 
         self.status = EnumStatus.NOT_VISITED
         self.level = float('inf')
@@ -30,8 +33,6 @@ class AbstractNode(ABC):
     @abstractmethod
     def node_text(self):
         pass
-    def __str__(self):
-        return  f"Node {self.id} with text {self.node_text()}"
 
 
         

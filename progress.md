@@ -21,9 +21,10 @@ Cache rivers : convert to images
 [f2925e3](https://github.com/Rob174/GenerationTerrain/tree/f2925e35c026f099b39c03ccb451b252e61da8cb)
 
 - 🔨 Create datasets objects to use hdf5 files 
-- 🔨 Operation Pipeline
+- ✔ Operation Pipeline
 - 🔨 Check if cycles
-- 🔨 Check if more than 2 outputs
+- ✔ Check if more than 2 outputs
+- ✔ Test graph1
 
 ✔️ done and tested ; 🔨 done not tested ; ⏲️ in progress ; ⏳ waiting for other scripts to finish ; 🚩 problem ; 🐛 bug ; 〰️ ok does the job but maybe to improve ; 🛑 pause ; 🛰️ release
 

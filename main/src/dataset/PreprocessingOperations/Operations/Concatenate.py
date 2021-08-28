@@ -1,8 +1,8 @@
 import numpy as np
-from main.src.dataset.PreprocessingOperations.AbstractOperation import AbstractPreprocessingOperation
+from main.src.dataset.PreprocessingOperations.AbstractOperation import AbstractOperation
 
 
-class Concatenate(AbstractPreprocessingOperation):
+class Concatenate(AbstractOperation):
     def __init__(self, *inputs):
         super(Concatenate, self).__init__(*inputs)
     def execute(self):
@@ -10,3 +10,5 @@ class Concatenate(AbstractPreprocessingOperation):
         self.outputs = np.concatenate([self.outputs],axis=0)
     def node_text(self):
         return "{Concatenate}"
+    def __repr__(self):
+        return f"Concatenate {self.attr_id} of level {self.level}"

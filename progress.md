@@ -18,13 +18,14 @@ Cache rivers : convert to images
 - ⏳ Dump rivers into HDF5 dataset (stored as images matching elevation map locations)
 
 # Saturday Aug 28 2021
-[f2925e3](https://github.com/Rob174/GenerationTerrain/tree/f2925e35c026f099b39c03ccb451b252e61da8cb)
+[8100595](https://github.com/Rob174/GenerationTerrain/tree/810059516f428a45e6332ed0b1a5d73f08e4e5d1)
 
 - 🔨 Create datasets objects to use hdf5 files 
 - ✔ Operation Pipeline
 - 🔨 Check if cycles
 - ✔ Check if more than 2 outputs
-- ✔ Test graph1
+- ✔ Test graph1 build_graph
+- ✔ Test graph1 execute
 
 ✔️ done and tested ; 🔨 done not tested ; ⏲️ in progress ; ⏳ waiting for other scripts to finish ; 🚩 problem ; 🐛 bug ; 〰️ ok does the job but maybe to improve ; 🛑 pause ; 🛰️ release
 

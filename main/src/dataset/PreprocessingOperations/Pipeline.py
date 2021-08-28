@@ -57,9 +57,7 @@ class Pipeline:
 
     def execute(self, name_id: str):
         self.attr_input.set_name_id(name_id)
-        last_level: Optional[Iterable] = None
         for level_id, level_list in self.levels:
             for op in level_list:
                 op.execute()
-            last_level = level_list
-        return [result.output for result in self.leaves]
+        return [result.outputs for result in self.leaves]

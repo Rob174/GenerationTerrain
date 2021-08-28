@@ -57,6 +57,7 @@ class Pipeline:
 
     def execute(self, name_id: str):
         self.attr_input.set_name_id(name_id)
+        self.levels.sort(key=lambda x:x[0])
         for level_id, level_list in self.levels:
             for op in level_list:
                 op.execute()

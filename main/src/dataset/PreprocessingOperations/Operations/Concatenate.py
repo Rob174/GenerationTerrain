@@ -7,7 +7,7 @@ class Concatenate(AbstractOperation):
         super(Concatenate, self).__init__(*inputs)
     def execute(self):
         super(Concatenate, self).execute()
-        self.outputs = np.concatenate([self.outputs],axis=0)
+        self.outputs = np.concatenate(self.outputs,axis=0)
     def node_text(self):
         return "{Concatenate}"
     def __repr__(self):

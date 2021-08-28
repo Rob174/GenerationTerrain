@@ -8,14 +8,22 @@
 - ✔ Raster read
 
 # Friday Aug 27 2021
-[f16ba28](https://github.com/Rob174/GenerationTerrain/tree/f16ba28b1792fc427d7175a0a48393be7c9576ae)
-
+[f2925e3](https://github.com/Rob174/GenerationTerrain/tree/f2925e35c026f099b39c03ccb451b252e61da8cb)
 
 Cache rivers : convert to images
 
-- ✔ First version
-- ✔ Optimized version avoiding PIL np switch
-- ✔ Optimized version avoiding too many invtransform get
+- ✔ First version GenerationTerrain.pstat
+- ✔ Optimized version avoiding PIL np switch GenerationTerrain2.pstat
+- ✔ Optimized version avoiding too many invtransform get GenerationTerrain5.pstat
+- ⏳ Dump rivers into HDF5 dataset (stored as images matching elevation map locations)
+
+# Saturday Aug 28 2021
+[f2925e3](https://github.com/Rob174/GenerationTerrain/tree/f2925e35c026f099b39c03ccb451b252e61da8cb)
+
+- 🔨 Create datasets objects to use hdf5 files 
+- 🔨 Operation Pipeline
+- 🔨 Check if cycles
+- 🔨 Check if more than 2 outputs
 
 ✔️ done and tested ; 🔨 done not tested ; ⏲️ in progress ; ⏳ waiting for other scripts to finish ; 🚩 problem ; 🐛 bug ; 〰️ ok does the job but maybe to improve ; 🛑 pause ; 🛰️ release
 

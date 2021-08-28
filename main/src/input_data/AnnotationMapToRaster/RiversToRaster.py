@@ -39,7 +39,7 @@ class RiversToRaster:
             with File(path_hdf5,"w") as cache:
                 for tiff in self.geotiff_opener.iter_geotiff(start=start,stop=stop):
                     self.line_drawer.transformer.set_source(tiff.current_rio_object)
-                    layer: Optional[PIL.Image] = None
+                    layer: Optional[PIL.Image.Image] = None
                     draw: Optional[PIL.ImageDraw.ImageDraw] = None
                     for points in list_points:
                         progress.on_end()
@@ -70,8 +70,8 @@ if __name__ == '__main__':
     split_ids = [int(v) for v in np.linspace(0,nb_elem,num_cpu*16*8)]
     RiversToRaster(*FactoryRiversExtractor().create()).generate(
         split_ids[0],
-        split_ids[1],
-        path_hdf5=FolderInfos.data_raw.joinpath("rivers").joinpath(f"cache_{split_ids[0]}_{split_ids[1]}.hdf5")
+        split_ids[-1],
+        path_hdf5=FolderInfos.data_raw.joinpath("rivers").joinpath(f"cache_{split_ids[0]}_{split_ids[-1]}.hdf5")
     )
     s=0
 

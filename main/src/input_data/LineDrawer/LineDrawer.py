@@ -9,7 +9,7 @@ import numpy as np
 
 from main.FolderInfos import FolderInfos
 from main.src.input_data.GeotiffOpener import GeotiffOpener
-from main.src.input_data.ShapefileReaders.RiversShpFileReader import RiversShpFileReader
+from main.src.input_data.Readers.RiversShpFileReader import RiversShpFileReader
 
 
 class LineDrawer:

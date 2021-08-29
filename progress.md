@@ -34,10 +34,14 @@ Cache rivers : convert to images
 - ✔ Test RiversDataset
 - ✔ Test graph graphviz
 - ✔ Improving initialization check of FolderInfos.py
+- ✔ geotiff to hdf5
 
 ✔️ done and tested ; 🔨 done not tested ; ⏲️ in progress ; ⏳ waiting for other scripts to finish ; 🚩 problem ; 🐛 bug ; 〰️ ok does the job but maybe to improve ; 🛑 pause ; 🛰️ release
 
 ## TODO
 
-- Use raster to superpose rivers
 - View rivers on elevation maps
+- extract mountains drawing from dem
+- filter dem 
+  - no mountain = useless
+  - rivers cut due to border line

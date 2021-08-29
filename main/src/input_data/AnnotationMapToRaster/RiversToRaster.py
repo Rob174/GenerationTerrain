@@ -14,7 +14,7 @@ from main.src.input_data.ColorManager.Color import Color
 from main.src.input_data.CoordinateTransformer.RasterCoordinateTransformer import RasterCoordinateTransformer
 from main.src.input_data.GeotiffOpener import GeotiffOpener
 from main.src.input_data.LineDrawer.LineDrawer import LineDrawer
-from main.src.input_data.ShapefileReaders.RiversShpFileReader import RiversShpFileReader
+from main.src.input_data.Readers.RiversShpFileReader import RiversShpFileReader
 from h5py import File
 class FactoryRiversExtractor:
     def create(self):

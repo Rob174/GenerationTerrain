@@ -9,6 +9,7 @@ class Concatenate(AbstractOperation):
         super(Concatenate, self).execute()
         self.outputs = np.concatenate(self.outputs,axis=0)
     def node_text(self):
+        super(Concatenate, self).node_text()
         return "{Concatenate}"
     def __repr__(self):
         return f"Concatenate {self.attr_id} of level {self.level}"

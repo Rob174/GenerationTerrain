@@ -21,6 +21,8 @@ class AbstractOperation(AbstractNode):
         self.outputs = [o.outputs for o in self.attr_inputs]
     def set_fake_first_op(self,input):
         raise WrongInput(self)
+    def node_text(self):
+        super(AbstractOperation, self).node_text()
 
 
 

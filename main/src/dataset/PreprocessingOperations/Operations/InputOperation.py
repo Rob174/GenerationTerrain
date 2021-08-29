@@ -18,3 +18,5 @@ class InputOperation(AbstractOperation):
         self.outputs = self.get(self.attr_inputs[0].outputs)
     def __repr__(self):
         return f"InputOperation {self.attr_id} of level {self.level}"
+    def node_text(self):
+        super(InputOperation, self).node_text()

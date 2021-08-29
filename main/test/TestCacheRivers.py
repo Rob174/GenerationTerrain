@@ -14,7 +14,7 @@ class TestCacheRivers(TestCase):
     def build(self):
         FolderInfos.init(test_without_data=True)
         dataset = HDF5Dataset(
-            src_hdf5=FolderInfos.data_raw.joinpath("rivers").joinpath("cache_rivers.hdf5"),
+            src_hdf5=FolderInfos.get_class().data_raw.joinpath("rivers").joinpath("cache_rivers.hdf5"),
             mapping=TwoWayDict({
                 "rivers": 0
             })
@@ -54,6 +54,7 @@ class TestCacheRivers(TestCase):
                 else:
                     self.assertEquals(uniq,[0.])
         dataset.close()
+
 
 
         

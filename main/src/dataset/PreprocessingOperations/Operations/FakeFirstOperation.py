@@ -10,6 +10,7 @@ class FakeFirstOperation(AbstractOperation):
     def set_name_id(self,name_id:str):
         self.outputs = name_id
     def node_text(self):
+        super(FakeFirstOperation, self).node_text()
         return "{FakeNode}"
     def __repr__(self):
         return f"FakeFirstOperation {self.attr_id} of level {self.level}"

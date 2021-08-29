@@ -20,7 +20,7 @@ class FactoryRiversExtractor:
     def create(self):
         FolderInfos.init(test_without_data=True)
         geotiff_opener = GeotiffOpener()
-        shapefile_reader = RiversShpFileReader(FolderInfos.data_raw.joinpath("rivers").joinpath("COURS_D_EAU.shp"))
+        shapefile_reader = RiversShpFileReader(FolderInfos.get_class().data_raw.joinpath("rivers").joinpath("COURS_D_EAU.shp"))
         line_drawer = LineDrawer(transformer=RasterCoordinateTransformer(), thickness=10, color=Color(r=0, g=0, b=255))
         return line_drawer,shapefile_reader,geotiff_opener,
 
@@ -71,7 +71,7 @@ if __name__ == '__main__':
     RiversToRaster(*FactoryRiversExtractor().create()).generate(
         split_ids[0],
         split_ids[-1],
-        path_hdf5=FolderInfos.data_raw.joinpath("rivers").joinpath(f"cache_{split_ids[0]}_{split_ids[-1]}.hdf5")
+        path_hdf5=FolderInfos.get_class().data_raw.joinpath("rivers").joinpath(f"cache_{split_ids[0]}_{split_ids[-1]}.hdf5")
     )
     s=0
 

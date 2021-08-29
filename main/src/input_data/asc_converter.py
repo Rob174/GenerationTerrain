@@ -99,9 +99,9 @@ class BDAltivFolderConverter:
 
 if __name__ == '__main__':
     FolderInfos.init(test_without_data=True)
-    for folder in FolderInfos.data_raw.joinpath("asc").iterdir():
+    for folder in FolderInfos.get_class().data_raw.joinpath("asc").iterdir():
         converter = BDAltivFolderConverter(
             folder,
-            GeoTiffFolderManager(FolderInfos.data_raw.joinpath("geotiff"))
+            GeoTiffFolderManager(FolderInfos.get_class().data_raw.joinpath("geotiff"))
         )
         converter.convert()

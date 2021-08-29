@@ -27,6 +27,13 @@ Cache rivers : convert to images
 - ✔ Test graph1 build_graph
 - ✔ Test graph1 execute
 
+# Sunday Aug 29 2021
+[3e65d88](https://github.com/Rob174/GenerationTerrain/tree/3e65d888bb268ee44430b0119a3c81652bdb2a66)
+
+- ✔ Tests HDF5Dataset
+- ✔ Test RiversDataset
+- Test graph graphviz
+
 ✔️ done and tested ; 🔨 done not tested ; ⏲️ in progress ; ⏳ waiting for other scripts to finish ; 🚩 problem ; 🐛 bug ; 〰️ ok does the job but maybe to improve ; 🛑 pause ; 🛰️ release
 
 ## TODO

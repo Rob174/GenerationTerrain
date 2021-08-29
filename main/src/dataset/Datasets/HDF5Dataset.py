@@ -13,9 +13,9 @@ class HDF5Dataset(AbstractDataset):
     """A dataset to manage hdf5 files for 2d np.ndarrays"""
 
     def __init__(self, src_hdf5: Path, mapping: TwoWayDict):
-        super().__init__(mapping)
         self.attr_path = src_hdf5
         self.file = File(self.attr_path, "r")
+        super(HDF5Dataset, self).__init__(mapping)
 
     def get(self, id: str):
         """Get the object representing the array of id name
@@ -52,4 +52,5 @@ class HDF5Dataset(AbstractDataset):
     def close(self):
         self.file.close()
     def node_text(self):
+        super(HDF5Dataset, self).node_text()
         return f"{{HDF5Dataset|{{path|{self.attr_path.name}}}"

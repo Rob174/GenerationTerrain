@@ -19,30 +19,58 @@ class FolderInfos:
     Example of usage:
 
         >>> FolderInfos.init(test_without_data=False)
-        >>> FolderInfos.root_folder
+        >>> FolderInfos.get_class().root_folder
         C:\\....\\detection_nappe_hydrocarbures_IMT_cefrem\\
     """
-    data_in: Path = None
-    """Path, data_in folder path"""
-    data_out: Path = None
-    """Path,  data_out folder path"""
-    data_raw: Path = None
-    """Path, data_raw folder path"""
-    base_folder: Path = None
-    """Path, path to the newly created folder for the run"""
-    base_filename: Path = None
-    """Path, incomplete path to any new file in this new folder"""
-    data_test: Path = None
-    """Path, data_test folder path"""
-    root_folder: Path = None
-    """Path, path to the GenerationTerrain folder"""
-    id: str = None
-    """str, uniq id generated with the datetime of the run"""
-    initialized = False
-    """bool, True if initialized"""
-
+    custom_name: str = ""
+    subdir: str = ""
+    @property
+    def data_in(self) -> Path:
+        """Path, data_in folder path"""
+        return self.root_folder.joinpath("data_in")
+    @property
+    def data_out(self) -> Path:
+        """Path,  data_out folder path"""
+        path = self.root_folder.joinpath("data_out")
+        if FolderInfos.subdir != "":
+            self._data_out = path.joinpath(FolderInfos.subdir)
+        return path
+    @property
+    def data_raw(self) -> Path:
+        """Path, data_raw folder path"""
+        return self.root_folder.joinpath("data_raw")
+    @property
+    def base_folder(self) -> Path:
+        """Path, path to the newly created folder for the run"""
+        return self.data_out.joinpath(self.id + "_"+FolderInfos.custom_name)
+    @property
+    def base_filename(self) -> Path:
+        """Path, incomplete path to any new file in this new folder"""
+        return self.base_folder.joinpath(self.id+"_"+FolderInfos.custom_name)
+    @property
+    def data_test(self) -> Path:
+        """Path, data_test folder path"""
+        return self.root_folder.joinpath("data_test")
+    @property
+    def root_folder(self) -> Path:
+        """Path, path to the GenerationTerrain folder"""
+        return Path(__file__).parent.parent
+    @property
+    def id(self) -> str:
+        """str, uniq id generated with the datetime of the run"""
+        if self._id is None:
+            self._id = strftime("%Y-%m-%d_%Hh%Mmin%Ss", localtime())
+        return self._id
+    instance = None
+    @staticmethod
+    def get_class() -> 'FolderInfos':
+        if FolderInfos.instance is None:
+            raise NotInitializedException()
+        return FolderInfos.instance
     @staticmethod
     def init(custom_name="",subdir="",test_without_data=False,with_id=None):
+        FolderInfos.instance = FolderInfos(custom_name,subdir,test_without_data,with_id)
+    def __init__(self,custom_name="",subdir="",test_without_data=False,with_id=None):
         """Initialize some interesting pathes as static attributes.
 
         Args:
@@ -50,35 +78,19 @@ class FolderInfos:
             subdir: str, subdir for datafolder
             test_without_data: bool, if False, the object automatically creates a folder for each run. If True this folder is not created.
         """
+        FolderInfos.subdir = subdir
+        FolderInfos.custom_name = custom_name
         while True:
-            FolderInfos.id = strftime("%Y-%m-%d_%Hh%Mmin%Ss", localtime())
             if with_id is not None:
-                FolderInfos.id = with_id
-            FolderInfos.root_folder = Path(__file__).parent.parent
-            FolderInfos.input_data_folder = FolderInfos.root_folder.joinpath("data_in")
-            FolderInfos.data_out = FolderInfos.root_folder.joinpath("data_out")
-            if subdir != "":
-                FolderInfos.data_out = FolderInfos.data_out.joinpath(subdir)
-            FolderInfos.base_folder = FolderInfos.data_out.joinpath(FolderInfos.id + "_"+custom_name)
-            FolderInfos.base_filename = FolderInfos.base_folder.joinpath(FolderInfos.id+"_"+custom_name)
-            FolderInfos.data_test = FolderInfos.root_folder.joinpath("data_test")
-            FolderInfos.data_raw = FolderInfos.root_folder.joinpath("data_raw")
+                self._id = with_id
+            else:
+                self._id = None
             try:
                 if test_without_data is False and with_id is None:
-                    os.mkdir(FolderInfos.base_folder)
+                    os.mkdir(self.base_folder)
                 break
             except FileExistsError as e:
                 print(e)
                 print("waiting..... folder name already taken")
                 time.sleep(4)
-        FolderInfos.initialized = True
-    @staticmethod
-    def is_initialized():
-        if not FolderInfos.initialized:
-            raise NotInitializedException()
-    @staticmethod
-    def open_mode_suggestion(path):
-        if os.path.exists(path) is True:
-            return "r+"
-        return "w"
 

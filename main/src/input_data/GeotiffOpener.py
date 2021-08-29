@@ -6,7 +6,7 @@ import rasterio as rio
 
 class GeotiffOpener:
     def __init__(self):
-        self.base_path = FolderInfos.data_raw.joinpath("elevation").joinpath("geotiff")
+        self.base_path = FolderInfos.get_class().data_raw.joinpath("elevation").joinpath("geotiff")
         self.current_rio_object = None
         self.current_path = None
 

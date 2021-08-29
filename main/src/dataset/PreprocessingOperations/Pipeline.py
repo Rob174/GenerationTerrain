@@ -1,6 +1,7 @@
+from pathlib import Path
 from typing import List, Iterable, Optional
 
-from main.src.dataset.PreprocessingOperations.AbstractNode import EnumStatus
+from main.src.dataset.PreprocessingOperations.AbstractNode import EnumStatus, AbstractNode
 from main.src.dataset.PreprocessingOperations.AbstractOperation import AbstractOperation
 from main.src.dataset.PreprocessingOperations.Operations.FakeFirstOperation import FakeFirstOperation
 from itertools import groupby
@@ -19,12 +20,13 @@ class OutputLengthException(Exception):
 
 
 class Pipeline:
-    def __init__(self, input_operations: List[AbstractOperation]):
+    def __init__(self, input_operations: List[AbstractOperation], out_path: Path):
         input_operations.sort(key=lambda x: x.attr_id)
         self.attr_input: FakeFirstOperation = FakeFirstOperation(*input_operations)
         for input in input_operations:
             input.set_fake_first_op(self.attr_input)
         self.leveled_operations = []
+        self.attr_out_path = out_path
 
     def build_levels(self):
         self.queue = [self.attr_input]
@@ -35,6 +37,9 @@ class Pipeline:
         length_last = len(self.leaves)
         if length_last != 2:
             raise OutputLengthException(length_last)
+        for node in AbstractNode.nodes:
+            node.link()
+        AbstractNode.render(self.attr_out_path)
 
     def search_level_children(self):
         if len(self.queue) == 0:

@@ -7,8 +7,8 @@ from main.src.dataset.Datasets.TwoWayDict import TwoWayDict
 
 class RiversDatasetFactory:
     def __call__(self, *args, **kwargs):
-        elevation_dataset = HDF5Dataset(FolderInfos.data_in.joinpath("elevations.hdf5"),mapping=TwoWayDict({}))
-        rivers_dataset = HDF5Dataset(FolderInfos.data_in.joinpath("rivers.hdf5"),mapping=TwoWayDict({"river":"0x0000ff"}))
+        elevation_dataset = HDF5Dataset(FolderInfos.get_class().data_in.joinpath("elevations.hdf5"),mapping=TwoWayDict({}))
+        rivers_dataset = HDF5Dataset(FolderInfos.get_class().data_in.joinpath("rivers.hdf5"),mapping=TwoWayDict({"river":"0x0000ff"}))
         concatenated_dataset = ConcatDataset(elevation_dataset,rivers_dataset)
         return concatenated_dataset
         

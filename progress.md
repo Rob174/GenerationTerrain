@@ -15,12 +15,12 @@ Cache rivers : convert to images
 - ✔ First version GenerationTerrain.pstat
 - ✔ Optimized version avoiding PIL np switch GenerationTerrain2.pstat
 - ✔ Optimized version avoiding too many invtransform get GenerationTerrain5.pstat
-- ⏳ Dump rivers into HDF5 dataset (stored as images matching elevation map locations)
+- ✔ Dump rivers into HDF5 dataset (stored as images matching elevation map locations)
 
 # Saturday Aug 28 2021
 [1ce65c1](https://github.com/Rob174/GenerationTerrain/tree/1ce65c198794006569cb0a9d1ad39a959db4dfcd)
 
-- 🔨 Create datasets objects to use hdf5 files 
+- ✔ Create datasets objects to use hdf5 files 
 - ✔ Operation Pipeline
 - 🔨 Check if cycles
 - ✔ Check if more than 2 outputs
@@ -28,11 +28,12 @@ Cache rivers : convert to images
 - ✔ Test graph1 execute
 
 # Sunday Aug 29 2021
-[3e65d88](https://github.com/Rob174/GenerationTerrain/tree/3e65d888bb268ee44430b0119a3c81652bdb2a66)
+[070f95c](https://github.com/Rob174/GenerationTerrain/tree/070f95c3de5c5c9ae601e8faaa71a0273e11548d)
 
 - ✔ Tests HDF5Dataset
 - ✔ Test RiversDataset
-- Test graph graphviz
+- ✔ Test graph graphviz
+- ✔ Improving initialization check of FolderInfos.py
 
 ✔️ done and tested ; 🔨 done not tested ; ⏲️ in progress ; ⏳ waiting for other scripts to finish ; 🚩 problem ; 🐛 bug ; 〰️ ok does the job but maybe to improve ; 🛑 pause ; 🛰️ release
 

@@ -2,8 +2,7 @@
 from abc import ABC,abstractmethod
 from typing import Any
 
-from main.src.data.TwoWayDict import TwoWayDict
-
+from main.src.dataset.Datasets.TwoWayDict import TwoWayDict
 from main.src.dataset.PreprocessingOperations.Operations.InputOperation import InputOperation
 
 
@@ -11,10 +10,11 @@ class ElementNotFound(Exception):
     def __init__(self,element,dataset):
         self.message = f"The element {element} has not been found in the dataset {dataset}"
 
-class AbstractDataset(ABC,InputOperation):
+class AbstractDataset(InputOperation):
     """Base class to build your own dataset"""
 
     def __init__(self, mapping: TwoWayDict, *args, **kwargs):
+        super(AbstractDataset, self).__init__()
         self.attr_mapping = mapping
 
     @property
@@ -40,9 +40,8 @@ class AbstractDataset(ABC,InputOperation):
     @abstractmethod
     def values(self):
         pass
-    @abstractmethod
     def items(self):
-        pass
+        return ((k,self.get(k)) for k in self.keys())
 
     @abstractmethod
     def __iter__(self):

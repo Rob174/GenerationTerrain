@@ -4,14 +4,12 @@ from pathlib import Path
 import numpy as np
 from h5py import File
 
-from main.src.data.Datasets.AbstractDataset import AbstractDataset
-from main.src.data.TwoWayDict import TwoWayDict
-from main.src.param_savers.BaseClass import BaseClass
 
-from main.src.dataset.Datasets.AbstractDataset import ElementNotFound
+from main.src.dataset.Datasets.AbstractDataset import ElementNotFound, AbstractDataset
+from main.src.dataset.Datasets.TwoWayDict import TwoWayDict
 
 
-class HDF5Dataset(BaseClass, AbstractDataset):
+class HDF5Dataset(AbstractDataset):
     """A dataset to manage hdf5 files for 2d np.ndarrays"""
 
     def __init__(self, src_hdf5: Path, mapping: TwoWayDict):
@@ -53,3 +51,5 @@ class HDF5Dataset(BaseClass, AbstractDataset):
         return len(self.file)
     def close(self):
         self.file.close()
+    def node_text(self):
+        return f"{{HDF5Dataset|{{path|{self.attr_path.name}}}"

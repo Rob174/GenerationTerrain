@@ -1,6 +1,7 @@
 import numpy as np
 from unittest import TestCase
 
+from main.src.dataset.PreprocessingOperations.AbstractNode import AbstractNode
 from main.src.dataset.PreprocessingOperations.Operations.Concatenate import Concatenate
 from main.src.dataset.PreprocessingOperations.Operations.InputOperation import InputOperation
 from main.src.dataset.PreprocessingOperations.Pipeline import Pipeline
@@ -29,6 +30,7 @@ class FakeInputOperationMultiColor(FakeInputOperationMonoColor):
         return f"FakeInputOperationMultiColor {self.attr_id} of level {self.level}"
 class TestPipeline(TestCase):
     def build_graph1(self):
+        AbstractNode.reset_ids()
         dataset_in1 = FakeInputOperationMonoColor()
         dataset_in2 = FakeInputOperationMonoColor()
         merged = Concatenate(dataset_in1,dataset_in2)
@@ -36,6 +38,7 @@ class TestPipeline(TestCase):
         pipeline = Pipeline([dataset_in1,dataset_in2,dataset_in3])
         return pipeline,dataset_in1,dataset_in2,merged,dataset_in3
     def build_graph2(self):
+        AbstractNode.reset_ids()
         dataset_in1 = FakeInputOperationMonoColor()
         dataset_in2 = FakeInputOperationMultiColor()
         merged = Concatenate(dataset_in1,dataset_in2)

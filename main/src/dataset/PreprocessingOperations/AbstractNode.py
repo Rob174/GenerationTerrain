@@ -11,6 +11,9 @@ class EnumStatus(str,Enum):
     NOT_VISITED = "not_visited"
 class AbstractNode(ABC):
     id = 0
+    @staticmethod
+    def reset_ids():
+        AbstractNode.id = 0
     def __init__(self,*inputs):
         self.attr_inputs: List = inputs
         self.attr_id =  int(AbstractNode.id)

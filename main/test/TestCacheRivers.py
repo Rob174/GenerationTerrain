@@ -23,10 +23,37 @@ class TestCacheRivers(TestCase):
     def test_open(self):
         dataset = self.build()
         dataset.keys()
+        dataset.close()
     def test_shape(self):
         dataset = self.build()
         keys = dataset.keys()
         random.shuffle(keys)
         for k in keys[:self.num_random_samples]:
-            self.assertEquals(len(dataset.get(k).shape),2)
+            img = dataset.get(k)
+            self.assertEquals(len(img.shape),3)
+        dataset.close()
+    def test_channel_position(self):
+        dataset = self.build()
+        keys = dataset.keys()
+        random.shuffle(keys)
+        for k in keys[:self.num_random_samples]:
+            img = dataset.get(k)
+            self.assertEquals(img.shape[2],3)
+        dataset.close()
+
+    def test_color(self):
+        dataset = self.build()
+        keys = dataset.keys()
+        random.shuffle(keys)
+        for k in keys[:self.num_random_samples]:
+            img = dataset.get(k)
+            for c in range(3):
+                uniq = list(np.unique(img[:,:,c]))
+                if c == 2:
+                    self.assertEquals(uniq,[0.,255.])
+                else:
+                    self.assertEquals(uniq,[0.])
+        dataset.close()
+
+
         

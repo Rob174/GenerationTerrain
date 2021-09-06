@@ -1,10 +1,8 @@
 import PIL
 import numpy as np
-import json
 from pathlib import Path
 from typing import Optional, Union
 
-from rich.progress import TextColumn, BarColumn, TimeElapsedColumn, TimeRemainingColumn
 
 from main.FolderInfos import FolderInfos
 from main.src.ProgressBar.IterationManager import IterationManager
@@ -22,7 +20,7 @@ class FactoryRiversExtractor:
         geotiff_opener = GeotiffOpener()
         shapefile_reader = RiversShpFileReader(FolderInfos.get_class().data_raw.joinpath("rivers").joinpath("COURS_D_EAU.shp"))
         line_drawer = LineDrawer(transformer=RasterCoordinateTransformer(), thickness=10, color=Color(r=0, g=0, b=255))
-        return line_drawer,shapefile_reader,geotiff_opener,
+        return line_drawer,shapefile_reader,geotiff_opener
 
 class RiversToRaster:
     def __init__(self, line_drawer: LineDrawer,shapefile_reader:RiversShpFileReader, geotiff_opener: GeotiffOpener,cache_path: Optional[Union[str,Path]] = None):
@@ -34,26 +32,23 @@ class RiversToRaster:
         size = stop-start+1
         list_points = list(self.shapefile_reader.get_points())
         size *= len(list_points)
-        progress = ProgressBar0(IterationManager(total=size))
-        with progress:
-            with File(path_hdf5,"w") as cache:
-                for tiff in self.geotiff_opener.iter_geotiff(start=start,stop=stop):
-                    self.line_drawer.transformer.set_source(tiff.current_rio_object)
-                    layer: Optional[PIL.Image.Image] = None
-                    draw: Optional[PIL.ImageDraw.ImageDraw] = None
-                    for points in list_points:
-                        progress.on_end()
-                        layer,draw = self.line_drawer.draw(
-                            [point[0] for point in points],[point[1] for point in points],
-                            bounding_box=BoundingBox(
-                                upper_left=tiff.upper_left(),
-                                lower_right=tiff.lower_right(),
-                                coordinate_transformer=self.line_drawer.transformer
-                            ),
-                            layer=layer,draw=draw
-                        )
-                layer = np.array(layer,dtype=np.uint8)
-                cache.create_dataset(name=tiff.current_path.stem,shape=layer.shape,dtype='f',data=layer)
+        with File(path_hdf5,"w") as cache:
+            for tiff in self.geotiff_opener.iter_geotiff(start=start,stop=stop):
+                self.line_drawer.transformer.set_source(tiff.current_rio_object)
+                layer: Optional[PIL.Image.Image] = None
+                draw: Optional[PIL.ImageDraw.ImageDraw] = None
+                for points in list_points:
+                    layer,draw = self.line_drawer.draw(
+                        [point[0] for point in points],[point[1] for point in points],
+                        bounding_box=BoundingBox(
+                            upper_left=tiff.upper_left(),
+                            lower_right=tiff.lower_right(),
+                            coordinate_transformer=self.line_drawer.transformer
+                        ),
+                        layer=layer,draw=draw
+                    )
+            layer = np.array(layer,dtype=np.uint8)
+            cache.create_dataset(name=tiff.current_path.stem,shape=layer.shape,dtype='f',data=layer)
         return None
     def len_geotiff(self):
         return len(self.geotiff_opener)
@@ -61,17 +56,26 @@ class RiversToRaster:
         if self.cache_path is None:
             return
         pass
-
+from ray.util.multiprocessing import Pool
+import ray
+def execute(arg):
+    start, stop = arg
+    RiversToRaster(*FactoryRiversExtractor().create()).generate(
+        start,
+        stop,
+        path_hdf5=FolderInfos.get_class().data_raw.joinpath("rivers").joinpath(
+            f"cache_{start}_{stop}.hdf5")
+    )
+    return f"End {start} -> {stop}"
 if __name__ == '__main__':
-    num_cpu = 8
+    num_cpu = 16
+
     FolderInfos.init(test_without_data=True)
     r = RiversToRaster(*FactoryRiversExtractor().create())
     nb_elem = r.len_geotiff()
-    split_ids = [int(v) for v in np.linspace(0,nb_elem,num_cpu*16*8)]
-    RiversToRaster(*FactoryRiversExtractor().create()).generate(
-        split_ids[0],
-        split_ids[-1],
-        path_hdf5=FolderInfos.get_class().data_raw.joinpath("rivers").joinpath(f"cache_{split_ids[0]}_{split_ids[-1]}.hdf5")
-    )
+    split_ids = [int(v) for v in np.linspace(0,nb_elem,num_cpu*4)]
+    ray.init()
+    pool = Pool(processes=num_cpu)
+    for result in pool.map(execute,list(zip(split_ids[:-1],split_ids[1:]))):
+        print(result)
     s=0
-

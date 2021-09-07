@@ -36,6 +36,12 @@ Cache rivers : convert to images
 - ✔ Improving initialization check of FolderInfos.py
 - ✔ geotiff to hdf5
 
+# Tuesday Sep 07 2021
+[055aabe](https://github.com/Rob174/GenerationTerrain/tree/055aabe41d8897a05666063ef74f8f23492be824)
+
+- ✔ Generate splited hdf5 files rivers
+- 🔨 script to merge
+
 ✔️ done and tested ; 🔨 done not tested ; ⏲️ in progress ; ⏳ waiting for other scripts to finish ; 🚩 problem ; 🐛 bug ; 〰️ ok does the job but maybe to improve ; 🛑 pause ; 🛰️ release
 
 ## TODO

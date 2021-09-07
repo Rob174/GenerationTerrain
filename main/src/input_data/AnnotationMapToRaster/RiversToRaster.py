@@ -34,6 +34,7 @@ class RiversToRaster:
         size *= len(list_points)
         with File(path_hdf5,"w") as cache:
             for tiff in self.geotiff_opener.iter_geotiff(start=start,stop=stop):
+                print(tiff.current_path)
                 self.line_drawer.transformer.set_source(tiff.current_rio_object)
                 layer: Optional[PIL.Image.Image] = None
                 draw: Optional[PIL.ImageDraw.ImageDraw] = None
@@ -47,8 +48,8 @@ class RiversToRaster:
                         ),
                         layer=layer,draw=draw
                     )
-            layer = np.array(layer,dtype=np.uint8)
-            cache.create_dataset(name=tiff.current_path.stem,shape=layer.shape,dtype='f',data=layer)
+                layer = np.array(layer,dtype=np.uint8)
+                cache.create_dataset(name=tiff.current_path.stem,shape=layer.shape,dtype='f',data=layer)
         return None
     def len_geotiff(self):
         return len(self.geotiff_opener)
@@ -67,15 +68,28 @@ def execute(arg):
             f"cache_{start}_{stop}.hdf5")
     )
     return f"End {start} -> {stop}"
-if __name__ == '__main__':
-    num_cpu = 16
+def to_hdf5():
+    num_cpu = 11
 
     FolderInfos.init(test_without_data=True)
     r = RiversToRaster(*FactoryRiversExtractor().create())
     nb_elem = r.len_geotiff()
-    split_ids = [int(v) for v in np.linspace(0,nb_elem,num_cpu*4)]
+    split_ids = [int(v) for v in np.linspace(0, nb_elem, num_cpu * 4)]
     ray.init()
     pool = Pool(processes=num_cpu)
-    for result in pool.map(execute,list(zip(split_ids[:-1],split_ids[1:]))):
+    stop_index = len(split_ids)
+    start_index = 0
+    for result in pool.map(execute, list(zip(split_ids[:stop_index - 1], split_ids[1:stop_index]))):
         print(result)
+if __name__ == '__main__':
+    FolderInfos.init(test_without_data=True)
+    rivers_folder: Path = FolderInfos.data_raw.joinpath("rivers")
+    with File(rivers_folder.joinpath("cache_rivers.hdf5"),"w") as cache:
+        cache: File
+        for cache_file in rivers_folder.iterdir():
+            if cache_file.suffix == ".hdf5":
+                with File(cache_file,"r") as cache_src:
+                    for img_name,img in cache_src.items():
+                        cache.create_dataset(name=img_name,shape=img.shape,dtype='i',data=np.array(img,dtype=np.uint8))
+
     s=0

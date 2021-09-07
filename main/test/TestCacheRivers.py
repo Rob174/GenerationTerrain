@@ -1,3 +1,4 @@
+from pathlib import Path
 from unittest import TestCase
 
 from main.FolderInfos import FolderInfos
@@ -50,10 +51,15 @@ class TestCacheRivers(TestCase):
             for c in range(3):
                 uniq = list(np.unique(img[:,:,c]))
                 if c == 2:
-                    self.assertEquals(uniq,[0.,255.])
+                    self.assertEquals(uniq,[0,255])
                 else:
-                    self.assertEquals(uniq,[0.])
+                    self.assertEquals(uniq,[0])
         dataset.close()
+    def test_keys(self):
+        dataset = self.build()
+        keys = set(dataset.keys())
+        expected_keys = set({str(i) for i in range(0,2064)})
+        self.assertEquals(keys.difference(expected_keys),set())
 
 
 

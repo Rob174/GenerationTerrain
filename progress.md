@@ -42,6 +42,8 @@ Cache rivers : convert to images
 - ✔ Generate splited hdf5 files rivers
 - 🔨 script to merge
 
+- 🔨 Histogram 
+
 ✔️ done and tested ; 🔨 done not tested ; ⏲️ in progress ; ⏳ waiting for other scripts to finish ; 🚩 problem ; 🐛 bug ; 〰️ ok does the job but maybe to improve ; 🛑 pause ; 🛰️ release
 
 ## TODO

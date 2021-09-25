@@ -83,13 +83,14 @@ def to_hdf5():
         print(result)
 if __name__ == '__main__':
     FolderInfos.init(test_without_data=True)
-    rivers_folder: Path = FolderInfos.data_raw.joinpath("rivers")
+    rivers_folder: Path = FolderInfos.get_class().data_raw.joinpath("rivers")
     with File(rivers_folder.joinpath("cache_rivers.hdf5"),"w") as cache:
         cache: File
-        for cache_file in rivers_folder.iterdir():
+        for cache_file in list(rivers_folder.iterdir())[0:2]:
             if cache_file.suffix == ".hdf5":
                 with File(cache_file,"r") as cache_src:
                     for img_name,img in cache_src.items():
                         cache.create_dataset(name=img_name,shape=img.shape,dtype='i',data=np.array(img,dtype=np.uint8))
+                print(f"{cache_file} done")
 
     s=0

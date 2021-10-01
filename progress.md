@@ -42,6 +42,8 @@ Cache rivers : convert to images
 - ✔ Generate splited hdf5 files rivers
 - ✔ script to merge
 
+# Friday Oct 01 2021
+[6eedfc7](https://github.com/Rob174/GenerationTerrain/tree/6eedfc70703bf9581435c12a14b9d48d1b4e9d4c)
 - ✔ Histogram 
 
 ✔️ done and tested ; 🔨 done not tested ; ⏲️ in progress ; ⏳ waiting for other scripts to finish ; 🚩 problem ; 🐛 bug ; 〰️ ok does the job but maybe to improve ; 🛑 pause ; 🛰️ release

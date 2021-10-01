@@ -8,14 +8,14 @@ from main.src.dataset.PreprocessingOperations.AbstractNode import AbstractNode
 from main.src.dataset.PreprocessingOperations.Operations.Concatenate import Concatenate
 from main.src.dataset.PreprocessingOperations.Operations.InputOperation import InputOperation
 from main.src.dataset.PreprocessingOperations.Pipeline import Pipeline, OutputLengthException
-
+from main.src.dataset.PreprocessingOperations.Operations.Histogram import Histogram
 
 class FakeInputOperationMonoColor(InputOperation):
     def __init__(self):
         super(FakeInputOperationMonoColor, self).__init__()
 
-    def get(self,id):
-        super(FakeInputOperationMonoColor, self).get(id)
+    def get(self,name_id:str):
+        super(FakeInputOperationMonoColor, self).get(name_id)
         return np.random.rand(100,100)
     def node_text(self):
         super(FakeInputOperationMonoColor, self).node_text()
@@ -42,9 +42,10 @@ class TestPipeline(TestCase):
         dataset_in1 = FakeInputOperationMonoColor()
         dataset_in2 = FakeInputOperationMonoColor()
         merged = Concatenate(dataset_in1,dataset_in2)
+        merged_histo = Histogram(0.1,merged)
         dataset_in3 = FakeInputOperationMonoColor()
         pipeline = Pipeline([dataset_in1,dataset_in2,dataset_in3],self.out_path.joinpath("graph.dot"))
-        return pipeline,dataset_in1,dataset_in2,merged,dataset_in3
+        return pipeline,dataset_in1,dataset_in2,merged,merged_histo,dataset_in3
     def build_graph2(self):
         AbstractNode.reset()
         dataset_in1 = FakeInputOperationMonoColor()
@@ -82,5 +83,4 @@ class TestPipeline(TestCase):
         pipeline = Pipeline([dataset_in1, dataset_in2, dataset_in3, dataset_in4], self.out_path.joinpath("graph.dot"))
         with self.assertRaises(OutputLengthException):
             pipeline.build_levels()
-
 

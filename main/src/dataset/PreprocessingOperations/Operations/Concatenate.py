@@ -3,7 +3,7 @@ from main.src.dataset.PreprocessingOperations.AbstractOperation import AbstractO
 
 
 class Concatenate(AbstractOperation):
-    def __init__(self, *inputs):
+    def __init__(self, *inputs: AbstractOperation):
         super(Concatenate, self).__init__(*inputs)
     def execute(self):
         super(Concatenate, self).execute()

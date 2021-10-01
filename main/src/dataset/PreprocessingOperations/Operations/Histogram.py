@@ -4,11 +4,9 @@ from main.src.dataset.PreprocessingOperations.AbstractOperation import AbstractO
 import numpy as np
 
 class Histogram(AbstractOperation):
-    def __init__(self, *inputs):
+    def __init__(self, bin_size: float,*inputs):
         super(Histogram, self).__init__(*inputs)
-    @property
-    def bin_size(self):
-        raise NotImplemented
+        self.bin_size = bin_size
     def execute(self):
         super(Histogram, self).execute()
         self.outputs:List[Tuple[np.ndarray,np.ndarray]] = \

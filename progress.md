@@ -40,9 +40,9 @@ Cache rivers : convert to images
 [055aabe](https://github.com/Rob174/GenerationTerrain/tree/055aabe41d8897a05666063ef74f8f23492be824)
 
 - ✔ Generate splited hdf5 files rivers
-- 🔨 script to merge
+- ✔ script to merge
 
-- 🔨 Histogram 
+- ✔ Histogram 
 
 ✔️ done and tested ; 🔨 done not tested ; ⏲️ in progress ; ⏳ waiting for other scripts to finish ; 🚩 problem ; 🐛 bug ; 〰️ ok does the job but maybe to improve ; 🛑 pause ; 🛰️ release
 
@@ -53,3 +53,5 @@ Cache rivers : convert to images
 - filter dem 
   - no mountain = useless
   - rivers cut due to border line
+  
+- Pipeline : make execute returns a dict and give the possibility to the user to name operations in order to get directly by id the desired result 

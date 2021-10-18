@@ -1,6 +1,7 @@
 #!/bin/bash
 short_hash=$(git rev-parse --short HEAD)
 long_hash=$(git rev-parse HEAD)
-url="https://github.com/Rob174/GenerationTerrain/tree/$long_hash"
+repo=$(git config --get remote.origin.url)
+url=$(python -c "import os;print(os.path.splitext('${repo}')[0]+'/tree/$long_hash')")
 echo "[$short_hash]($url)" | clip.exe
 

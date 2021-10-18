@@ -57,3 +57,4 @@ Cache rivers : convert to images
   - rivers cut due to border line
   
 - Pipeline : make execute returns a dict and give the possibility to the user to name operations in order to get directly by id the desired result 
+- 

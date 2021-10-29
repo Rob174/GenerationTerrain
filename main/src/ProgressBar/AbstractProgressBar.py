@@ -4,7 +4,7 @@ from rich.progress import Progress, TextColumn, BarColumn, TimeElapsedColumn, Ti
 
 
 
-class AbstractProgressBar:
+class AbstractProgressBar(ABC):
     """Base class to build a progressbar"""
 
     def __init__(self):
